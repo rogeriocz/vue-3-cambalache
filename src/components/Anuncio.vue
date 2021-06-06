@@ -3,6 +3,7 @@
     <img :src="imageUrl" class="card-img-top" alt="">
     <div class="card-body">
       <h5 class="card-title">$ {{ price }} MN</h5>
+      <p class="text-small">{{ typeName }}</p>
       <p class="card-text">{{ title }}</p>
     </div>
   </div>
@@ -14,7 +15,8 @@ export default {
   props: {
     title: String,
     price: Number,
-    imageUrl: String
+    imageUrl: String,
+    typeName: String
   }
 }
 </script>
