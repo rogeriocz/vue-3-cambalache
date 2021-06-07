@@ -61,11 +61,14 @@ export default {
 
       fetch('http://apicambalache.test/api/emails',{
         method:"POST",
-        mode: 'no-cors',
-        body:JSON.stringify(sendData)
+        //mode: 'no-cors',
+        body:JSON.stringify(sendData),
+        headers: {
+          "Content-type": "application/json",
+        }
       })
-      .then(answer=>answer.json())
-      .then((answerData=>{
+      .then(answer => answer.json())
+      .then((answerData => {
         console.log(answerData);
       }))
     }
