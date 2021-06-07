@@ -9,30 +9,34 @@
           </div>
 
           <div class="modal-body">
-            <form>
+            <form action="" v-on:submit.prevent="newMessage">
                 <div class="form-group">
                     <label for="issuer-name" class="col-form-label">Nombre:</label>
-                    <input type="text" class="form-control" id="issuer-name">
+                    <input type="text"  class="form-control" id="issuer-name" v-model="mensaje.name">
                 </div>
                 <div class="form-group">
                     <label for="message-email" class="col-form-label">Correo:</label>
-                    <input type="email" class="form-control" id="message-email">
+                    <input type="email"  class="form-control" id="message-email" v-model="mensaje.email">
                 </div>
                 <div class="form-group">
                     <label for="message-text" class="col-form-label">Mensaje:</label>
-                    <textarea class="form-control" id="message-text"></textarea>
+                    <textarea  class="form-control" id="message-text" v-model="mensaje.message"></textarea>
                 </div>
+                <div class="modal-footer">
+
+                  <button type="submit" class="btn btn-primary" >
+                    Enviar mensaje
+                  </button>  
+
+                  <button class="btn btn-secondary" @click="$emit('close')">
+                    Cancelar
+                  </button>
+
+              </div>
             </form>
           </div>
-
-          <div class="modal-footer">
-              <button class="btn btn-primary">
-                Enviar mensaje
-              </button>  
-              <button class="btn btn-secondary" @click="$emit('close')">
-                Cancelar
-              </button>
-          </div>
+            
+              
 
         </div>
       </div>
@@ -42,10 +46,32 @@
 
 <script>
 export default {
-  name: 'Modal',
-  props: {
+  data() {
+    return {
+      
+       mensaje:{}
+      
+    }
+  },
+
+  methods:{
+    newMessage() {
+      //console.log(this.mensaje);
+      var sendData={name:this.mensaje.name, email:this.mensaje.email, message:this.mensaje.message}
+
+      fetch('http://apicambalache.test/api/emails',{
+        method:"POST",
+        mode: 'no-cors',
+        body:JSON.stringify(sendData)
+      })
+      .then(answer=>answer.json())
+      .then((answerData=>{
+        console.log(answerData);
+      }))
+    }
   }
 }
+
 </script>
 
 <style scoped>
