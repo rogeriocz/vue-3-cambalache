@@ -86,13 +86,8 @@ export default {
   },
 
   mounted() {
-    fetch('http://apicambalache.test/api/types')
-      .then(response => response.json())
-      .then(data => {
-        this.types = data;
-      });
-
-      this.fetchAnuncios();
+    this.fetchTypes();
+    this.fetchAnuncios();
   },
 
   methods: {
@@ -111,6 +106,14 @@ export default {
     onPriceMaxKeyUp() {
       console.log('onPriceMaxKeyUp');
       this.fetchAnuncios();
+    },
+
+    fetchTypes() {
+      fetch('http://apicambalache.test/api/types')
+      .then(response => response.json())
+      .then(data => {
+        this.types = data;
+      });
     },
 
     fetchAnuncios() {

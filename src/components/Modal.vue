@@ -24,7 +24,7 @@
                 </div>
                 <div class="modal-footer">
 
-                  <button type="submit" class="btn btn-primary" >
+                  <button type="submit" class="btn btn-primary" :disabled="btnDisabled">
                     Enviar mensaje
                   </button>  
 
@@ -47,22 +47,21 @@
 <script>
 export default {
   data() {
-    return {
-      
-       mensaje:{}
-      
+    return {      
+       mensaje: {},
+       btnDisabled: false 
     }
   },
 
   methods:{
     newMessage() {
       //console.log(this.mensaje);
-      var sendData={name:this.mensaje.name, email:this.mensaje.email, message:this.mensaje.message}
-
-      fetch('http://apicambalache.test/api/emails',{
-        method:"POST",
+      this.btnDisabled = true;
+      
+      fetch('http://apicambalache.test/api/emails', {
+        method: "POST",
         //mode: 'no-cors',
-        body:JSON.stringify(sendData),
+        body: JSON.stringify(this.mensaje),
         headers: {
           "Content-type": "application/json",
         }
@@ -70,6 +69,8 @@ export default {
       .then(answer => answer.json())
       .then((answerData => {
         console.log(answerData);
+
+        this.$emit('close');
       }))
     }
   }
